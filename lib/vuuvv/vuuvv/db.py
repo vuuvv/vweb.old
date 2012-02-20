@@ -9,24 +9,36 @@ class Model(object):
 
 def belongs_to(self):
 	pass
+
 def has_many(self):
 	pass
+
 def has_one(self):
 	pass
+
 def has_and_belongs_to_many(self):
 	pass
 
+
+class TableDefinition(object):
+	def __init__(self):
+		self.fields = OrderedProperties()
+	
+	def column(self, name, *args, **kw):
+		setattr(self.fields, name, (args, kw))
+
+	def keys(self):
+		return self.fields.keys()
+
 def create_table(table_name):
 	def wrap(fn):
-		table_definition = OrderedProperties()
+		table_definition = TableDefinition()
 		fn(table_definition)
 		table = Table(table_name, app.db_meta)
+		print table_definition.keys()
 		for attrname in table_definition.keys():
-			value = table_definition[attrname]
-			if isinstance(value, Column):
-				table.append_column(value)
-			elif isinstance(value, Constraint):
-				table.append_constraint(value)
+			args, kw = table_definition.fields[attrname]
+			table.append_column(Column(attrname, *args, **kw))
 		table.create(app.db_engine)
 
 	return wrap

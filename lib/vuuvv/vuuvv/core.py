@@ -18,7 +18,10 @@ class Application(Flask):
 		Flask.__init__(self, import_name, **kw)
 		self.load_config()
 		self.register_blueprints()
-		self.init_database()
+
+	def run(self):
+		self.load_database()
+		Flask.run(self)
 
 	def load_config(self):
 		from vuuvv import default_config
@@ -37,19 +40,17 @@ class Application(Flask):
 			url_prefix = None if b == default else b
 			self.register_blueprint(module.blueprint, url_prefix=url_prefix)
 
-	def connect_database(self, reflect_all=False):
+	def connect_database(self):
 		config = self.config
 		args = [config[name] for name in ('DRIVERNAME', 'USERNAME', 
 			'PASSWORD', 'HOST', 'PORT', 'DATABASE')]
 		url = URL(*args)
 		self.db_engine = create_engine(str(url), echo = config['DEBUG'])
 		self.db_meta = MetaData()
-		if reflect_all:
-			self.db_meta.reflect(bind=self.db_engine)
 		self.db_session_cls = sessionmaker(
 			autocommit=False, autoflush=False, bind=self.db_engine)
 
-	def init_database(self):
+	def load_database(self):
 		self.connect_database()
 		self.find_models()
 
@@ -64,6 +65,7 @@ class Application(Flask):
 	def find_models(self):
 		blue_prints = self.config['BLUEPRINTS'] 
 		meta = self.db_meta
+		meta.reflect(bind=self.db_engine)
 		engine = self.db_engine
 		for b in blue_prints:
 			name = "%s.models" % b

@@ -5,7 +5,7 @@ def dbcreate(t):
 	from vuuvv.core import Application
 	app = Application(__name__)
 	with app.test_request_context():
-		app.connect_database(reflect_all=True)
+		app.connect_database()
 		__import__("db.schema")
 
 @task()

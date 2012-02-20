@@ -49,8 +49,6 @@
 #
 #app.run()
 
-import sys
-sys.path.insert(0, "../..")
 
 from vuuvv.core import Application
 app = Application(__name__)

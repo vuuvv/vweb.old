@@ -4,6 +4,18 @@ from sqlalchemy.util import OrderedProperties
 
 from flask import current_app as app
 
+class Model(object):
+	relations = {}
+
+def belongs_to(self):
+	pass
+def has_many(self):
+	pass
+def has_one(self):
+	pass
+def has_and_belongs_to_many(self):
+	pass
+
 def create_table(table_name):
 	def wrap(fn):
 		table_definition = OrderedProperties()

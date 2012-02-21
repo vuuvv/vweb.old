@@ -13,5 +13,5 @@ USERNAME = None
 PASSWORD = None
 HOST = None
 PORT = None
-DATABASE = ""
+DATABASE = "db/test.db"
 

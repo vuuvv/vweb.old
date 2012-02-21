@@ -1,5 +1,5 @@
-from vuuvv.db import *
 from sqlalchemy import *
+from vuuvv.db import *
 
 class CreateTable(Migrate):
 	def up(self):

@@ -52,9 +52,8 @@ class Task(object):
 		return self.target
 
 	def execute(self, argv=[]):
-		args, argv = self.parser.parse_known_args(argv)
-		kwargs = args.__dict__
-		self.func(**kwargs)
+		self.option, self.argv = self.parser.parse_known_args(argv[1:])
+		self.func()
 		self.invoked = True
 
 def task(*args, **kwargs):

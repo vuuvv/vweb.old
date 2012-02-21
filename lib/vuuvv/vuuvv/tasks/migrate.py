@@ -1,8 +1,11 @@
 import os
 import imp
 import inspect
+import argparse
+from datetime import datetime
 
 from pake import *
+from distutil import log
 from vuuvv.db import Migrate
 from vuuvv.core import Application
 
@@ -10,29 +13,37 @@ migrate_directory = 'db/migrate'
 
 @task()
 @option('action', nargs='?')
-def dbmigrate(t):
+def migrate(t):
 	"""
 	Database migrate like a rails project.
 	"""
 	app = Application(__name__)
 	action = t.option.action
 	if not action:
+		# no argument, then migrate version to latest
 		Migration('migrate').run(config=app.config)
 	else:
 		try:
+			# specified the version, then migrate to it
 			version = int(action)
 			Migration('migrate').run(config=app.config, version=version)
 		except ValueError:
-			Migration(action).run(config=app.config)
+			# specified some command to run, push the 'action' back first.
+			t.argv.insert(0, action)
+			options = parser_options(t)
+			Migration(options.migrate).run(options=options, config=app.config)
 
 def parser_options(t):
-	subparsers = t.parser.add_subparsers(dest='migrate')
+	parser = argparse.ArgumentParser()
+	subparsers = parser.add_subparsers(dest='migrate')
 	parser_up = subparsers.add_parser('up', help='migrate up to a version')
-	parser_up.add_argument("version", nargs='?')
+	parser_up.add_argument("step", nargs='?')
 	parser_down = subparsers.add_parser('down', help='migrate down to a version')
-	parser_down.add_argument("version", nargs='?')
+	parser_down.add_argument("step", nargs='?')
 	parser_new = subparsers.add_parser('new', help='make a new migrate directory')
-	options, argv = t.parser.parse_known_args(t.argv)
+	parser_add = subparsers.add_parser('add', help='add a version for migrate')
+	parser_add.add_argument("description")
+	options, argv = parser.parse_known_args(t.argv)
 	return options
 
 class Migration(object):
@@ -70,6 +81,16 @@ class Migration(object):
 		with open(path, 'w') as file:
 			return file.write(str(version))
 
+	def get_path(self, filename):
+		return os.path.join(self.directory, filename)
+
+	def touch(self, filename, content=""):
+		path = os.path.join(self.directory, filename)
+		if not os.path.isfile(path):
+			with open(path, "w") as f:
+				f.write(content)
+			log.info(path)
+
 	def run(self, config=None, **kw):
 		self.config = config
 		meth = getattr(self, self.action)
@@ -80,27 +101,35 @@ class Migration(object):
 			os.mkdir('db')
 		if not os.path.isdir(migrate_directory):
 			os.mkdir(migrate_directory)
-		if not os.path.isfile(os.path.join(migrate_directory, "__init__.py")):
-			with open(os.path.join(migrate_directory, "__init__.py"), "w"):
-				pass
-		if not os.path.isfile(os.path.join(migrate_directory, "version")):
-			with open(os.path.join(migrate_directory, "version"), "w") as f:
-				f.write("0")
+		self.touch("__init__.py")
+		self.touch("version", "0")
 
-	def up(self):
-		version = self.version + 1
-		if version > self.latest_version:
-			return
-		while version not in self.versions and version < self.latest_version:
-			version += 1
-		self.run_version(version, 'up')
+	def add(self, options):
+		desc = options.description
+		filename = "%03d_%s_%s.py" % (self.latest_version + 1,
+			datetime.now().strftime("%Y%m%d%H%M%S"),
+			desc)
+		self.touch(filename)
+
+	def up(self, options):
+		step = 1 if options.step is None else options.step
+		latest = self.latest_version
+		for x in range(step):
+			version = self.version + 1
+			if version > latest:
+				return
+			while version not in self.versions and version < latest:
+				version += 1
+			self.run_version(version, 'up')
 		self.dump_version(version)
 
-	def down(self):
-		version = self.version
-		while version not in self.versions and version > 0:
-			version -= 1
-		self.run_version(version, 'down')
+	def down(self, options):
+		step = 1 if options.step is None else options.step
+		for x in range(step):
+			version = self.version
+			while version not in self.versions and version > 0:
+				version -= 1
+			self.run_version(version, 'down')
 		self.dump_version(version - 1)
 
 	def migrate(self, version=None):

@@ -14,27 +14,16 @@ def engine_from_config(config):
 class Model(object):
 	relations = {}
 
-def belongs_to(self):
-	pass
-
-def has_many(self):
-	pass
-
-def has_one(self):
-	pass
-
-def has_and_belongs_to_many(self):
-	pass
-
 class TableDefinition(object):
 	def __init__(self):
 		self.fields = OrderedProperties()
+		self.relations = []
 	
 	def column(self, name, *args, **kw):
 		setattr(self.fields, name, (args, kw))
 
-	def keys(self):
-		return self.fields.keys()
+	def relationship(self, *args, **kw):
+		self.relations.append((args, kw))
 
 class Migrate(object):
 	def __init__(self, engine):
@@ -51,7 +40,7 @@ class Migrate(object):
 			table_definition = TableDefinition()
 			fn(table_definition)
 			table = Table(name, self.meta)
-			for attrname in table_definition.keys():
+			for attrname in table_definition.fields.keys():
 				args, kw = table_definition.fields[attrname]
 				table.append_column(Column(attrname, *args, **kw))
 			table.create(self.engine)

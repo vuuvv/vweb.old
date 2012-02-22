@@ -9,9 +9,7 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.schema import MetaData, Table
 from sqlalchemy.orm import scoped_session, sessionmaker, mapper
 
-def camel_convert(name):
-	s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
-	return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+from pake.util import from_camel
 
 class Application(Flask):
 	def __init__(self, import_name, **kw):
@@ -73,7 +71,7 @@ class Application(Flask):
 			m = sys.modules[name]
 			for modelname in m.__all__:
 				model = getattr(m, modelname)
-				tablename = camel_convert(modelname)
+				tablename = from_camel(modelname)
 				table = Table(tablename, meta, autoload=True, autoload_with=engine)
 				mapper(model, table)
 

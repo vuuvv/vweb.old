@@ -1,2 +1,2 @@
 import dbcreate
-import dbmigrate
+import migrate

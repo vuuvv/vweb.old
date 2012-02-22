@@ -5,6 +5,8 @@ from sqlalchemy.engine import create_engine
 from sqlalchemy.ext.compiler import compiles
 from sqlalchemy.util import OrderedProperties
 
+import migrate
+
 def engine_from_config(config):
 	args = [config[name] for name in ('DRIVERNAME', 'USERNAME', 
 		'PASSWORD', 'HOST', 'PORT', 'DATABASE')]
@@ -28,8 +30,8 @@ class TableDefinition(object):
 class Migrate(object):
 	def __init__(self, engine):
 		self.engine = engine
-		self.meta = meta = MetaData()
-		meta.reflect(bind=engine)
+		self.meta = meta = MetaData(bind=engine)
+		meta.reflect()
 
 	@classmethod
 	def from_config(cls, config):
@@ -43,18 +45,24 @@ class Migrate(object):
 			for attrname in table_definition.fields.keys():
 				args, kw = table_definition.fields[attrname]
 				table.append_column(Column(attrname, *args, **kw))
-			table.create(self.engine)
+			table.create()
 
 		return wrap
 
 	def drop_table(self, name):
-		self.meta.tables[name].drop(self.engine)
+		self.meta.tables[name].drop()
 
 	def add_column(self, table, column):
-		self.engine.execute(AddColumn(table, column))
+		if not isinstance(table, Table):
+			table = self.meta.tables[name]
+		column.create(table)
 
 	def remove_column(self, table, column):
-		self.engine.execute(RemoveColumn(table, column))
+		if not isinstance(table, Table):
+			table = self.meta.tables[table]
+		if not isinstance(column, Column):
+			column = table.columns[column]
+		column.drop(table)
 
 class AddColumn(DDLElement):
 	def __init__(self, table, column):
@@ -75,6 +83,6 @@ class RemoveColumn(DDLElement):
 
 @compiles(RemoveColumn)
 def visit_remove_column(element, compiler, **kw):
-	return "ALTER TABLE %s DROP %s" %(
+	return "ALTER TABLE %s DROP COLUMN %s" %(
 			element.table, element.column)
 

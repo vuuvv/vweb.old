@@ -10,6 +10,7 @@ table.create()
 
 col = Column('col1', String, default='foobar')
 col.create(table, populate_default=True)
-
-print table.columns['col1']
+i = Index('test_index', table.c.col1)
+i.create()
+import pdb;pdb.set_trace()
 col.drop()

@@ -1,0 +1,29 @@
+.page {
+}
+
+.header {
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.container {
+	background: url("img/bg_containerTop.gif") repeat-x scroll 0 0 transparent;
+	padding: 12px 0 0;
+	position: relative;
+	z-index: 10;
+}
+
+.content {
+	background: none repeat scroll 0 0 #ffffff;
+	margin: 0 auto;
+	min-height: 320px;
+	padding: 0 20px 32px;
+	position: relative;
+	width: 960px;
+}
+
+.three-column {
+	width: 563px;
+}
+

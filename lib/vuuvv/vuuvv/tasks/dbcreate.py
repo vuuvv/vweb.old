@@ -16,7 +16,6 @@ def dbcreate(t):
 
 @task()
 def runserver(t):
-	from vuuvv.core import Application
-	app = Application(__name__)
+	import app
 	app.run()
 

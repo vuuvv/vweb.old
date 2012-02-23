@@ -1,0 +1,91 @@
+#global-nav {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#global-nav ul {
+	margin: 10px 0 0 0;
+	overflow: hidden;
+}
+
+#global-nav li {
+	border-left: 1px solid #cbcbcb;
+	float: left;
+	line-height: 10px;
+	padding: 0 7px;
+}
+
+#global-nav li a {
+	color: #b0b0b0;
+	display: block;
+	font-size: 12px;
+	line-height: 15px;
+}
+
+#logo {
+	background: url("img/logo.png") repeat scroll 0 0 transparent;
+	display: block;
+	float: left;
+	height: 42px;
+	line-height: 99em;
+	margin-top: 15px;
+	overflow: hidden;
+	width: 140px;
+}
+
+#main-nav {
+	height: 40px;
+	margin-left: 200px;
+	padding-top: 40px;
+}
+
+#main-nav li {
+	float: left;
+	position: relative;
+	border: 1px solid #fff;
+}
+
+#main-nav li.hover {
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+}
+
+#main-nav li.hover .submenu {
+	display: block;
+	z-index: 100;
+}
+
+#main-nav li .submenu {
+	display: none;
+	height: 400px;
+	position: absolute;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	left: -1px;
+}
+
+#main-nav li a {
+	color: #303030;
+	font: 17px/36px Microsoft YaHei,Segoe UI,Tahoma,Arial,Verdana,sans-serif;
+	height: 36px;
+	margin: 0 12px;
+	position: relative;
+	text-align: center;
+}
+
+#searchbox {
+	background: url("img/search-icon.png") no-repeat scroll 4px 50% #FFFFFF;
+	border: 1px solid #CFCFCF;
+	color: #393939;
+	opacity: 0.6;
+	position: relative;
+	width: 117px;
+	height: 22px;
+	top: 7px;
+	left: 15px;
+	padding-left: 20px;
+}
+

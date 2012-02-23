@@ -1,0 +1,38 @@
+<div class="header">
+	<div id="global-nav">
+		<ul id="clearfix">
+			{% for item in navigation %}
+			<li><a href="{{item.href}}">{{item.caption}}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+	<a id="logo" href="/"></a>
+	<div id="main-nav">
+		<ul class="clearfix">
+			
+			<li class="nav-item"><a href="#">首页</a></li>
+			
+			<li class="nav-item"><a href="#">关于中宇</a>
+				<div class="submenu three-column">
+				</div>
+			</li>
+			
+			<li class="nav-item"><a href="#">新闻中心</a></li>
+			
+			<li class="nav-item"><a href="#">品牌</a></li>
+			
+			<li class="nav-item"><a href="#">浴室空间</a></li>
+			
+			<li class="nav-item"><a href="#">产品展示</a></li>
+			
+			<li class="nav-item"><a href="#">销售专区</a></li>
+			
+			<li class="search-box">
+				<form action="#">
+					<input type="text" id="searchbox">
+				</form>
+			</li>
+		</ul>
+	</div>
+</div>
+

@@ -51,5 +51,10 @@
 
 
 from vuuvv.core import Application
-app = Application(__name__)
-app.run()
+
+def run():
+	app = Application(__name__)
+	app.run()
+
+if __name__ == '__main__':
+	run()

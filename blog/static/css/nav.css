@@ -24,67 +24,86 @@
 }
 
 #logo {
-	background: url("img/logo.png") repeat scroll 0 0 transparent;
+	position: absolute;
+	top: 15px;
+	background: url("images/logo.png") repeat scroll 0 0 transparent;
 	display: block;
 	float: left;
 	height: 42px;
 	line-height: 99em;
-	margin-top: 15px;
 	overflow: hidden;
 	width: 140px;
 }
 
 #main-nav {
+	position: relative;
 	height: 40px;
-	margin-left: 200px;
-	padding-top: 40px;
+	top: 80px;
 }
 
-#main-nav li {
+#main-nav1 {
+    background: url("images/navigation-item-background.png") repeat-x scroll left bottom transparent;
+    height: 43px;
+    position: relative;
+    z-index: 50;
+	top: 80px;
+	border: none;
+}
+
+#main-nav1 .ui-menubar-item {
+	background: url("images/navigation-item-background.png") repeat-x scroll left bottom transparent;
 	float: left;
+	height: 100%;
 	position: relative;
-	border: 1px solid #fff;
 }
 
-#main-nav li.hover {
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-top: 1px solid #ccc;
+#main-nav li.left-most {
+	background: url("images/mosaic-homebutton.png") repeat scroll -2px -46px transparent;
 }
 
-#main-nav li.hover .submenu {
-	display: block;
-	z-index: 100;
+#main-nav li.right-most {
+	background: none repeat scroll 0 50% transparent;
+	float: right;
 }
 
-#main-nav li .submenu {
-	display: none;
-	height: 400px;
-	position: absolute;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-bottom: 1px solid #ccc;
-	left: -1px;
+#main-nav li.right-most p {
+	background: url("images/navigation-last-button-cap.png") no-repeat scroll 100% 100% transparent !important;
 }
 
-#main-nav li a {
+#main-nav li p {
+	float: left;
+	height: 100%;
+}
+
+#main-nav1 .ui-menubar-link {
+	background: url("images/separator-separator.png") no-repeat scroll right top transparent;
 	color: #303030;
-	font: 17px/36px Microsoft YaHei,Segoe UI,Tahoma,Arial,Verdana,sans-serif;
-	height: 36px;
-	margin: 0 12px;
+	font: bold 17px/36px Microsoft YaHei,Segoe UI,Tahoma,Arial,Verdana,sans-serif;
+	height: 39px;
+	padding: 0px 15px 0px;
 	position: relative;
+	float: left;
+	display: block;
+}
+
+#main-nav li a span {
+	padding-bottom: 12px;
 	text-align: center;
 }
 
+#main-nav .submenu {
+	display: none;
+}
+
 #searchbox {
-	background: url("img/search-icon.png") no-repeat scroll 4px 50% #FFFFFF;
+	background: url("images/search-icon.png") no-repeat scroll 4px 50% #FFFFFF;
 	border: 1px solid #CFCFCF;
 	color: #393939;
 	opacity: 0.6;
 	position: relative;
 	width: 117px;
 	height: 22px;
-	top: 7px;
+	line-height: 22px;
 	left: 15px;
 	padding-left: 20px;
 }

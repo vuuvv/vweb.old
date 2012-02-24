@@ -2,28 +2,24 @@
 }
 
 .header {
-	width: 960px;
 	margin: 0 auto;
 	position: relative;
+	height: 98px;
 }
 
-.container {
-	background: url("img/bg_containerTop.gif") repeat-x scroll 0 0 transparent;
-	padding: 12px 0 0;
-	position: relative;
-	z-index: 10;
+.header ul {
+	list-style: none outside none;
+	margin: 0;
+	padding: 0;
+}
+
+.header a {
+	text-decoration: none;
 }
 
 .content {
-	background: none repeat scroll 0 0 #ffffff;
-	margin: 0 auto;
-	min-height: 320px;
-	padding: 0 20px 32px;
+	padding: 12px 0 0;
 	position: relative;
-	width: 960px;
-}
-
-.three-column {
-	width: 563px;
+	z-index: 10;
 }
 

@@ -17,5 +17,5 @@ def dbcreate(t):
 @task()
 def runserver(t):
 	import app
-	app.run()
+	app.run(host="0.0.0.0")
 

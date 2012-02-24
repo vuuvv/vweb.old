@@ -52,9 +52,9 @@
 
 from vuuvv.core import Application
 
-def run():
+def run(*args, **kw):
 	app = Application(__name__)
-	app.run()
+	app.run(*args, **kw)
 
 if __name__ == '__main__':
 	run()

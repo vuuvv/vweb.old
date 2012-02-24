@@ -17,9 +17,9 @@ class Application(Flask):
 		self.load_config()
 		self.register_blueprints()
 
-	def run(self):
+	def run(self, *args, **kw):
 		self.load_database()
-		Flask.run(self)
+		Flask.run(self, *args, **kw)
 
 	def load_config(self):
 		from vuuvv import default_config

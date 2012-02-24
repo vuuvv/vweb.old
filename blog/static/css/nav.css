@@ -41,7 +41,7 @@
 	top: 80px;
 }
 
-#main-nav1 {
+#main-nav {
     background: url("images/navigation-item-background.png") repeat-x scroll left bottom transparent;
     height: 43px;
     position: relative;
@@ -50,32 +50,38 @@
 	border: none;
 }
 
-#main-nav1 .ui-menubar-item {
+#main-nav .ui-menubar-item {
 	background: url("images/navigation-item-background.png") repeat-x scroll left bottom transparent;
 	float: left;
 	height: 100%;
 	position: relative;
 }
 
+#main-nav .ui-menubar-item.ui-state-hover {
+	border: none;
+	background-color: #fff;
+	background-position: 0 0;
+}
+
 #main-nav li.left-most {
 	background: url("images/mosaic-homebutton.png") repeat scroll -2px -46px transparent;
 }
 
+#main-nav li.left-most.ui-state-hover {
+	background-position: -2px -2px;
+}
+
 #main-nav li.right-most {
 	background: none repeat scroll 0 50% transparent;
-	float: right;
+	float:right;
 }
 
-#main-nav li.right-most p {
+#main-nav li.right-most .special {
 	background: url("images/navigation-last-button-cap.png") no-repeat scroll 100% 100% transparent !important;
-}
-
-#main-nav li p {
-	float: left;
 	height: 100%;
 }
 
-#main-nav1 .ui-menubar-link {
+#main-nav .ui-menubar-link {
 	background: url("images/separator-separator.png") no-repeat scroll right top transparent;
 	color: #303030;
 	font: bold 17px/36px Microsoft YaHei,Segoe UI,Tahoma,Arial,Verdana,sans-serif;
@@ -84,15 +90,13 @@
 	position: relative;
 	float: left;
 	display: block;
+	border: none;
 }
 
-#main-nav li a span {
-	padding-bottom: 12px;
-	text-align: center;
-}
-
-#main-nav .submenu {
-	display: none;
+#main-nav .ui-menu.submenu {
+	border-top: none;
+	border-radius: 0;
+	z-index: 200;
 }
 
 #searchbox {

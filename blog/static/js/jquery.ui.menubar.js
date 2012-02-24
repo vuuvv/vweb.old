@@ -46,6 +46,7 @@ $.widget( "ui.menubar", {
 			.attr( "role", "menubar" );
 		this._focusable( this.items );
 		this._hoverable( this.items );
+		this._hoverable( this.menuItems );
 		this.items.siblings( this.options.menuElement )
 			.menu({
 				position: {
@@ -90,7 +91,7 @@ $.widget( "ui.menubar", {
 				if ( event.type == "focus" && !event.originalEvent ) {
 					return;
 				}
-				event.preventDefault();
+				// event.preventDefault();
 				// TODO can we simplify or extractthis check? especially the last two expressions
 				// there's a similar active[0] == menu[0] check in _open
 				if ( event.type == "click" && menu.is( ":visible" ) && that.active && that.active[0] == menu[0] ) {
@@ -247,10 +248,10 @@ $.widget( "ui.menubar", {
 			}, this.options.position ) )
 			.removeAttr( "aria-hidden" )
 			.attr( "aria-expanded", "true" )
-			.menu("focus", event, menu.children( ".ui-menu-item" ).first() )
+			.menu("focus", event, menu.children( ".ui-menu-item" ).first() );
 			// TODO need a comment here why both events are triggered
-			.focus()
-			.focusin();
+			//.focus()
+			//.focusin();
 		this.open = true;
 	},
 

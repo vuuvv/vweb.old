@@ -102,7 +102,6 @@ $.widget( "ui.menubar", {
 					if( that.options.autoExpand ) {
 						clearTimeout( that.closeTimer );
 					}
-
 					that._open( event, menu );
 				}
 			})
@@ -217,6 +216,7 @@ $.widget( "ui.menubar", {
 			.prev()
 			.removeClass( "ui-state-active" )
 			.removeAttr( "tabIndex" );
+		this.active.parent().css("z-index", "1000");
 		this.active = null;
 		this.open = false;
 	},
@@ -238,20 +238,22 @@ $.widget( "ui.menubar", {
 			this.active
 				.prev()
 				.removeClass( "ui-state-active" );
+			this.active.parent().css("z-index", "1000");
 		}
 		// set tabIndex -1 to have the button skipped on shift-tab when menu is open (it gets focus)
 		var button = menu.prev().addClass( "ui-state-active" ).attr( "tabIndex", -1 );
 		this.active = menu
 			.show()
-			.position( $.extend({
-				of: button
-			}, this.options.position ) )
+			//.position( $.extend({
+			//	of: button
+			//}, this.options.position ) )
 			.removeAttr( "aria-hidden" )
-			.attr( "aria-expanded", "true" )
-			.menu("focus", event, menu.children( ".ui-menu-item" ).first() );
+			.attr( "aria-expanded", "true" );
+			// .menu("focus", event, menu.children( ".ui-menu-item" ).first() );
 			// TODO need a comment here why both events are triggered
 			//.focus()
 			//.focusin();
+		menu.parent().css("z-index", "1001");
 		this.open = true;
 	},
 

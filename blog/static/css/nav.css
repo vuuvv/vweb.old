@@ -45,7 +45,6 @@
     background: url("images/navigation-item-background.png") repeat-x scroll left bottom transparent;
     height: 43px;
     position: relative;
-    z-index: 50;
 	top: 80px;
 	border: none;
 }
@@ -96,7 +95,14 @@
 #main-nav .ui-menu.submenu {
 	border-top: none;
 	border-radius: 0;
-	z-index: 200;
+	margin-top: 39px;
+	margin-left: -1px;
+	top: 0;
+	left: 0;
+}
+
+#main-nav .left-most .submenu {
+	margin-left: 0;
 }
 
 #searchbox {
